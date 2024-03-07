@@ -1,0 +1,10 @@
+[Unit]
+Description=StatusPanel service
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStart=/bin/bash -c "docker compose --env-file /usr/share/writeme-service/.env  -f /usr/share/writeme-service/docker-compose.yaml up"
+
+[Install]
+WantedBy=multi-user.target

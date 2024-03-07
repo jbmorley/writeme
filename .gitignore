@@ -1,0 +1,6 @@
+.env
+build
+
+/service/package/writeme-service/DEBIAN/control
+/service/package/writeme-service/DEBIAN/prerm
+/service/package/writeme-service/usr/

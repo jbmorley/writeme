@@ -1,0 +1,25 @@
+version: '3.8'
+name: writeme
+
+services:
+  web:
+    image: $IMAGE_SHA
+    ports:
+      - 9449:9449
+    environment:
+      - DATABASE_URL=postgresql://hello_flask:hello_flask@database:5432/hello_flask_dev
+    depends_on:
+      - database
+  database:
+    image: postgres:13-alpine
+    volumes:
+      - writeme_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_flask
+      - POSTGRES_PASSWORD=hello_flask
+      - POSTGRES_DB=hello_flask_dev
+    ports:
+      - 54320:5432
+
+volumes:
+  writeme_data:

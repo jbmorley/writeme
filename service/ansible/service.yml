@@ -1,0 +1,40 @@
+- name: writeme
+  hosts: "{{ deployment_group }}"
+
+  tasks:
+
+    - name: Copy Debian package
+      copy:
+        src: "{{ package_path }}"
+        dest: /tmp/writeme-service.deb
+
+    - name: Create service directory
+      file:
+        path: /usr/share/writeme-service
+        state: directory
+      become: yes
+
+    - name: Create environment file
+      template:
+        src: templates/env
+        dest: /usr/share/writeme-service/.env
+      become: yes
+
+    - name: Install the service
+      apt:
+        deb: /tmp/writeme-service.deb
+      become: yes
+
+    - name: Enable site
+      template:
+        src: templates/site.caddy
+        dest: "/etc/caddy/writeme.caddy"
+        owner: root
+        group: root
+      become: yes
+
+    - name: Reload Caddy
+      service:
+        name: caddy
+        state: reloaded
+      become: yes

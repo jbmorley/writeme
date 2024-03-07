@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Create the database volume.
+docker volume create writeme_data
+
+# Load the Docker image.
+docker load < /usr/share/writeme-service/writeme-web-latest.tar.gz
+
+# Enable and start the service.
+systemctl enable writeme-service.service
+systemctl start writeme-service.service

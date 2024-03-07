@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Stop and disable the service
+systemctl stop writeme-service.service
+systemctl disable writeme-service.service
+
+# Remove the image.
+docker image rm --force $IMAGE_SHA

@@ -1,0 +1,20 @@
+[[source]]
+
+name = "pypi"
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[packages]
+
+cryptography = ">=39.0.1"
+Flask = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+py-dateutil = "*"
+pytest = "*"
+pytz = "*"
+requests = ">=2.31.0"
+
+[requires]
+
+python_version = "3.9"
