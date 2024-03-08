@@ -20,6 +20,7 @@ class Client:
                                     "last_anchor": last_anchor,
                                     "page_size": 5,
                                 })
+        response.raise_for_status()
         queue = response.json()
         return queue
 
@@ -75,7 +76,8 @@ def main():
                         yaml.dump(settings, fh)
                     shutil.move(temporary_path, SETTINGS_PATH)
 
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError) as e:
+            print(e)
             pass
         time.sleep(10)
 
