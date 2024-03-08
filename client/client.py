@@ -1,5 +1,7 @@
 import argparse
 import os
+import shutil
+import tempfile
 import time
 
 import requests
@@ -21,17 +23,23 @@ class Client:
         queue = response.json()
         return queue
 
-    def download_item(self, identifier):
-        response = requests.get(self.url + "/api/v1/queue/" + identifier,
-                                stream=True)
-        path = f"{identifier}.png"
-        if os.path.exists(path):
-            return path
-        with open(path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=1024):
-                if chunk:
-                    f.write(chunk)
-        return path
+    def download_item(self, identifier, destination):
+
+        filename = f"{identifier}.png"
+        destination_path = os.path.join(destination, filename)
+
+        if os.path.exists(destination_path):
+            return destination_path
+
+        with tempfile.TemporaryDirectory() as directory:
+            temporary_path = os.path.join(directory, filename)
+            response = requests.get(self.url + "/api/v1/queue/" + identifier, stream=True)
+            with open(temporary_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
+            shutil.move(temporary_path, destination_path)
+            return destination_path
 
 
 def main():
@@ -48,7 +56,6 @@ def main():
     last_anchor = settings["last_anchor"] if "last_anchor" in settings else -1
 
     # Change to the destination directory.
-    os.chdir(destination)
 
     # Poll the queue.
     client = Client(url=url)
@@ -57,13 +64,16 @@ def main():
             queue = client.get_queue(last_anchor=last_anchor)
             for item in queue:
                 print(item["anchor"], item["identifier"])
-                client.download_item(item["identifier"])
+                client.download_item(item["identifier"], destination=destination)
                 last_anchor = max(last_anchor, item["anchor"])
 
                 # Save the last anchor.
                 settings["last_anchor"] = last_anchor
-                with open(SETTINGS_PATH, "w") as fh:
-                    yaml.dump(settings, fh)
+                with tempfile.TemporaryDirectory() as directory:
+                    temporary_path = os.path.join(directory, "settings.yaml")
+                    with open(temporary_path, "w") as fh:
+                        yaml.dump(settings, fh)
+                    shutil.move(temporary_path, SETTINGS_PATH)
 
         except requests.exceptions.ConnectionError:
             pass
