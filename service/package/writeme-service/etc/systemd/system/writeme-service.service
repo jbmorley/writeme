@@ -1,5 +1,5 @@
 [Unit]
-Description=StatusPanel service
+Description=Writeme service
 After=docker.service
 Requires=docker.service
 
