@@ -53,7 +53,7 @@ def main():
 
     # Read the settings with defaults.
     destination = os.path.expanduser(settings["destination"])
-    url = settings["url"] if "url" in settings else "https://writeme-staging.jbmorley.co.uk"
+    url = settings["url"] if "url" in settings else "https://writeme.jbmorley.co.uk"
     last_anchor = settings["last_anchor"] if "last_anchor" in settings else -1
 
     # Change to the destination directory.
