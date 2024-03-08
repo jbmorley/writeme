@@ -10,7 +10,6 @@
                 font-family: Helvetica, sans-serif;
                 max-width: 800px;
                 margin: auto;
-                padding: 0 1rem;
                 text-align: center;
     		}
 
@@ -33,6 +32,7 @@
 
             canvas {
                 border: 1px solid black;
+                border-radius: 8px;
                 margin: 1rem auto;
                 width: 384px;
             }
@@ -58,21 +58,28 @@
         const ctx = canvas.getContext("2d");
 
         canvas.width = 384;
-        canvas.height = 500;
+        canvas.height = 384;
 
         let isPainting = false;
 
-        canvas.addEventListener('mousedown', (e) => {
+        canvas.addEventListener('pointerdown', (e) => {
             isPainting = true;
             ctx.beginPath();
         });
 
-        canvas.addEventListener('mouseup', (e) => {
+        canvas.addEventListener('pointerup', (e) => {
             isPainting = false;
             ctx.stroke();
         });
 
-        canvas.addEventListener('mousemove', (e) => {
+        canvas.addEventListener('pointerleave', (e) => {
+            isPainting = false;
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('pointermove', (e) => {
+            event.preventDefault();
+
             if(!isPainting) {
                 return;
             }
@@ -87,6 +94,11 @@
 
             ctx.stroke();
         });
+
+        // Stop canvas drags moving page around on touchscreen devices.
+        canvas.addEventListener("touchmove", (e) => {
+            e.preventDefault();
+        }, {passive: false});
 
         function clear() {
             ctx.fillStyle = "white";
