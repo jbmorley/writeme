@@ -26,20 +26,12 @@ set -x
 set -u
 
 SCRIPTS_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 ROOT_DIRECTORY="${SCRIPTS_DIRECTORY}/.."
-CHANGES_DIRECTORY="${SCRIPTS_DIRECTORY}/changes"
-BUILD_TOOLS_DIRECTORY="${SCRIPTS_DIRECTORY}/build-tools"
+SERVICE_DIRECTORY="${ROOT_DIRECTORY}/service"
+TESTS_DIRECTORY="${SERVICE_DIRECTORY}/tests"
 
-ENVIRONMENT_PATH="${SCRIPTS_DIRECTORY}/environment.sh"
+cd "$TESTS_DIRECTORY"
 
-source "$ENVIRONMENT_PATH"
-
-# Install the Python dependencies
-# This only install dependencies for submodules that have been checked out locally.
-pip3 install --user pipenv
-if [ -f "$CHANGES_DIRECTORY/Pipfile" ] ; then
-    PIPENV_PIPFILE="$CHANGES_DIRECTORY/Pipfile" pipenv install
-fi
-if [ -f "$BUILD_TOOLS_DIRECTORY/Pipfile" ] ; then
-    PIPENV_PIPFILE="$BUILD_TOOLS_DIRECTORY/Pipfile" pipenv sync
-fi
+pipenv sync
+pipenv run python -m unittest discover --verbose --start-directory .
