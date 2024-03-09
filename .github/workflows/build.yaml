@@ -59,7 +59,7 @@ jobs:
     - name: Install and test the package
       run: |
         sudo mkdir -p /usr/share/writeme-service/
-        echo "" | sudo tee -a /usr/share/writeme-service/.env
+        echo QUEUE_AUTHENTICATION_TOKEN=`uuidgen` | sudo tee -a /usr/share/writeme-service/.env
         sudo apt-get install ./service/build/writeme-service-*.deb
         sleep 5
         sudo systemctl status writeme-service.service
