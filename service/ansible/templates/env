@@ -1,0 +1,1 @@
+QUEUE_AUTHENTICATION_TOKEN="{{ lookup('ansible.builtin.env', 'QUEUE_AUTHENTICATION_TOKEN') }}"
