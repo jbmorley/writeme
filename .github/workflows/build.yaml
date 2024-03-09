@@ -92,6 +92,7 @@ jobs:
         SERVICE_ADDRESS: ${{ vars.SERVICE_ADDRESS }}
         ANSIBLE_SSH_KEY: ${{ secrets.ANSIBLE_SSH_KEY }}
         ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
+        QUEUE_AUTHENTICATION_TOKEN: ${{ secrets.QUEUE_AUTHENTICATION_TOKEN }}
       run: |
         service/ansible/deploy.sh writeme-service-*.deb
 
@@ -123,5 +124,6 @@ jobs:
 #         SERVICE_ADDRESS: ${{ vars.SERVICE_ADDRESS }}
 #         ANSIBLE_SSH_KEY: ${{ secrets.ANSIBLE_SSH_KEY }}
 #         ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
+#         QUEUE_AUTHENTICATION_TOKEN: ${{ secrets.QUEUE_AUTHENTICATION_TOKEN }}
 #       run: |
 #         service/ansible/deploy.sh writeme-service-*.deb

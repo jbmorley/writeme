@@ -50,7 +50,6 @@ logging.basicConfig(level=logging.INFO,
 SERVICE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 VERSION_PATH = os.path.join(SERVICE_DIRECTORY, "VERSION")
 
-
 # Read the version.
 METADATA = {
     "version": "Unknown"
@@ -69,6 +68,9 @@ date = datetime.datetime.strptime(date_string, "%y%m%d%H%M")
 sha = "%06x" % int(sha_string)
 logging.info("%s (UTC)" % date)
 logging.info("https://github.com/jbmorley/writeme/commit/" + sha)
+
+# Load the authentication token.
+QUEUE_AUTHENTICATION_TOKEN = os.environ["QUEUE_AUTHENTICATION_TOKEN"]
 
 # Create the Flask app.
 app = Flask(__name__)
@@ -95,6 +97,18 @@ def close_database(exception):
         db.close()
 
 
+def require_authentication_token(fn):
+    @functools.wraps(fn)
+    def inner(*args, **kwargs):
+        logging.info(f"Checking authentication token...")
+        if request.headers.get("Authorization") == f"Bearer {QUEUE_AUTHENTICATION_TOKEN}":
+            return fn(*args, **kwargs)
+        else:
+            request.stream.read()
+            return f"Invalid authentication token.", 403
+    return inner
+
+
 @app.route('/')
 def homepage():
     return send_from_directory('static', 'index.html')
@@ -108,6 +122,7 @@ def queue_post():
 
 
 @app.route('/api/v1/queue/<identifier>', methods=['GET'])
+@require_authentication_token
 def queue_get(identifier):
     try:
         data, last_modified = get_database().get_data(identifier)
@@ -123,6 +138,7 @@ def queue_get(identifier):
 
 
 @app.route('/api/v1/queue', methods=['GET'])
+@require_authentication_token
 def queue():
     args = request.args
     last_anchor = args.get("last_anchor", default=-1, type=int)

@@ -11,11 +11,15 @@ SETTINGS_PATH = os.path.expanduser("~/.config/writeme/settings.yaml")
 
 class Client:
 
-    def __init__(self, url):
+    def __init__(self, url, token):
         self.url = url
+        self.token = token
 
     def get_queue(self, last_anchor=-1):
         response = requests.get(self.url + "/api/v1/queue",
+                                headers={
+                                    "Authorization": f"Bearer {self.token}"
+                                },
                                 params={
                                     "last_anchor": last_anchor,
                                     "page_size": 5,
@@ -34,7 +38,11 @@ class Client:
 
         with tempfile.TemporaryDirectory() as directory:
             temporary_path = os.path.join(directory, filename)
-            response = requests.get(self.url + "/api/v1/queue/" + identifier, stream=True)
+            response = requests.get(self.url + "/api/v1/queue/" + identifier,
+                                    headers={
+                                        "Authorization": f"Bearer {self.token}"
+                                    },
+                                    stream=True)
             with open(temporary_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=1024):
                     if chunk:
@@ -55,11 +63,12 @@ def main():
     destination = os.path.expanduser(settings["destination"])
     url = settings["url"] if "url" in settings else "https://writeme.jbmorley.co.uk"
     last_anchor = settings["last_anchor"] if "last_anchor" in settings else -1
+    token = settings["token"]
 
     # Change to the destination directory.
 
     # Poll the queue.
-    client = Client(url=url)
+    client = Client(url=url, token=token)
     while True:
         try:
             queue = client.get_queue(last_anchor=last_anchor)
