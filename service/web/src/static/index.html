@@ -152,7 +152,7 @@
             Number(version.substring(8, 10)),
             Number(version.substring(10, 18)),
         ];
-        const date = new Date(Date.UTC(year + 2000, month, day, hour, minute));
+        const date = new Date(Date.UTC(year + 2000, month - 1, day, hour, minute));
         document.getElementById("build-number").innerHTML = version;
         document.getElementById("build-date").innerHTML = date.toLocaleString();
 
