@@ -1,4 +1,6 @@
-# Writeme
+# WriteMe
+
+Send doodles to my receipt printer
 
 ## Service
 
