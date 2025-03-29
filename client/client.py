@@ -28,9 +28,11 @@ class Client:
         queue = response.json()
         return queue
 
-    def download_item(self, identifier, destination):
+    def download_item(self, item, destination):
+        anchor = item["anchor"]
+        identifier = item["identifier"]
 
-        filename = f"{identifier}.png"
+        filename = f"{anchor:04d} {identifier}.png"
         destination_path = os.path.join(destination, filename)
 
         if os.path.exists(destination_path):
@@ -74,7 +76,7 @@ def main():
             queue = client.get_queue(last_anchor=last_anchor)
             for item in queue:
                 print(item["anchor"], item["identifier"])
-                client.download_item(item["identifier"], destination=destination)
+                client.download_item(item, destination=destination)
                 last_anchor = max(last_anchor, item["anchor"])
 
                 # Save the last anchor.
