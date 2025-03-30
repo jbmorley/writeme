@@ -4,49 +4,7 @@
         <title>WriteMe</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    	<style>
-    		body {
-                background-color: #fff;
-                font-family: Helvetica, sans-serif;
-                max-width: 800px;
-                margin: auto;
-                text-align: center;
-    		}
-
-            h1 {
-                text-align: center;
-            }
-
-            a {
-                color: blue;
-            }
-
-            form {
-                text-align: center;
-            }
-
-            nav > ul {
-                list-style: none;
-                padding: 0;
-            }
-
-            nav > ul > li {
-                display: inline;
-            }
-
-            footer {
-                text-align: center;
-                font-weight: 200;
-            }
-
-            canvas {
-                border: 1px solid black;
-                border-radius: 8px;
-                margin: 1rem auto;
-                width: 384px;
-            }
-
-    	</style>
+        <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
         <nav>
@@ -60,8 +18,22 @@
             <button id="clear">Clear</button>
             <button id="send">Send</button>
         </div>
+
+        <h2>Showcase</h2>
+
+        <p>Looking for inspiration? Here are a few of the doodles people have sent.</p>
+
+        <ul class="showcase">
+            <li><img src="/images/showcase/0050.png" /></li>
+            <li><img src="/images/showcase/0034.png" /></li>
+            <li><img src="/images/showcase/0028.png" /></li>
+            <li><img src="/images/showcase/0027.png" /></li>
+            <li><img src="/images/showcase/0022.png" /></li>
+        </ul>
+
         <footer>
             <p>Copyright &copy; 2024-2025 <a href="https://jbmorley.co.uk" target="_blank">Jason Morley</a></p>
+            <p>All doodles are copyright their original creators.</p>
             <p>Build <span id="build-number"></span>, <span id="build-date"></span>, <span id="commit"></span>.</p>
         </footer>
     </body>
