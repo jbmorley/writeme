@@ -109,11 +109,6 @@ def require_authentication_token(fn):
     return inner
 
 
-@app.route('/')
-def homepage():
-    return send_from_directory('static', 'index.html')
-
-
 @app.route('/api/v1/queue', methods=['POST'])
 def queue_post():
     identifier = str(uuid.uuid4())
@@ -150,6 +145,14 @@ def queue():
 @app.route('/api/v1/service/about', methods=['GET'])
 def service_about():
     return jsonify(METADATA)
+
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def static_content(path):
+    if not path or path.endswith("/"):
+        path = os.path.join(path, "index.html")
+    return send_from_directory('static', path)
 
 
 if __name__ == '__main__':
