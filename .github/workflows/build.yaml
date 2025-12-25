@@ -95,35 +95,3 @@ jobs:
         QUEUE_AUTHENTICATION_TOKEN: ${{ secrets.QUEUE_AUTHENTICATION_TOKEN }}
       run: |
         service/ansible/deploy.sh writeme-service-*.deb
-
-#   service-deploy-production:
-#
-#     needs: [service-build, service-deploy-staging]
-#     runs-on: ubuntu-latest
-#     environment:
-#       name: production
-#       url: https://${{ vars.SERVICE_ADDRESS }}
-#     # Ideally we'd enforce concurrency here, but there doesn't seem to be a nice
-#     # way to combine concurrency and 'manual' deployments triggered by a review.
-#     # concurrency: production
-#     if: ${{ github.ref == 'refs/heads/main' }}
-#
-#     steps:
-#
-#     - name: Checkout repository
-#       uses: actions/checkout@v4
-#
-#     - name: Download the build package
-#       uses: actions/download-artifact@v4
-#       with:
-#         name: service
-#
-#     - name: Deploy the service
-#       env:
-#         SERVICE_DEPLOYMENT_GROUP: ${{ vars.SERVICE_DEPLOYMENT_GROUP }}
-#         SERVICE_ADDRESS: ${{ vars.SERVICE_ADDRESS }}
-#         ANSIBLE_SSH_KEY: ${{ secrets.ANSIBLE_SSH_KEY }}
-#         ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_BECOME_PASS }}
-#         QUEUE_AUTHENTICATION_TOKEN: ${{ secrets.QUEUE_AUTHENTICATION_TOKEN }}
-#       run: |
-#         service/ansible/deploy.sh writeme-service-*.deb
