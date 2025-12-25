@@ -33,8 +33,23 @@
         group: root
       become: yes
 
-    - name: Reload Caddy
+    - name: Configure site
+      template:
+        src: templates/site
+        dest: /etc/nginx/sites-available/{{ service_address }}
+        owner: root
+        group: root
+      become: yes
+
+    - name: Enable site
+      file:
+        src: /etc/nginx/sites-available/{{ service_address }}
+        dest: /etc/nginx/sites-enabled/{{ service_address }}
+        state: link
+      become: yes
+
+    - name: Reload Nginx
       service:
-        name: caddy
+        name: nginx
         state: reloaded
       become: yes
