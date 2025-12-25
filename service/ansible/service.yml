@@ -25,14 +25,6 @@
         deb: /tmp/writeme-service.deb
       become: yes
 
-    - name: Enable site
-      template:
-        src: templates/site.caddy
-        dest: "/etc/caddy/writeme.caddy"
-        owner: root
-        group: root
-      become: yes
-
     - name: Configure site
       template:
         src: templates/site
