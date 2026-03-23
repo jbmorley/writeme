@@ -17,7 +17,7 @@ jobs:
     steps:
 
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Checkout required submodules
       run: |
@@ -25,7 +25,7 @@ jobs:
         git submodule update --init --depth 1 scripts/changes
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: "3.9"
 
@@ -50,7 +50,7 @@ jobs:
         docker image ls
 
     - name: Archive the Debian package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: service
         path: service/build/writeme-service-*.deb
@@ -79,10 +79,10 @@ jobs:
     steps:
 
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Download the build package
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: service
 
