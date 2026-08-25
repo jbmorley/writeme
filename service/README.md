@@ -35,10 +35,6 @@ sudo journalctl -u writeme-service -f
 
 ## Development
 
-### Dependencies
-
-WriteMe uses shared infrastructure for installing and managing dependencies. Follow the instructions [here](/README.markdown#dependencies).
-
 ### Running Locally
 
 ```bash

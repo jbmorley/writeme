@@ -6,12 +6,6 @@ Send doodles to my receipt printer
 
 ### Dependencies
 
-Install dependencies:
-
-```sh
-scripts/install-dependencies.sh
-```
-
 Upgrade pinned Python dependencies:
 
 ```sh
