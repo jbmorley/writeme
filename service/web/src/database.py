@@ -117,7 +117,7 @@ class Database(object):
                            (uuid, ))
             result = cursor.fetchone()
             if result is None:
-                raise KeyError(f"No data for key '{key}'")
+                raise KeyError(f"No data for key '{uuid}'")
             return result[0].tobytes(), result[1]
 
     def get_queue(self, last_anchor, page_size):
