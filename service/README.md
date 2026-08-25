@@ -2,7 +2,7 @@
 
 ## Infrastructure
 
-Writeme is hosted as a Docker container behind the Caddy web server using a reverse proxy.
+Writeme is hosted as a Docker container behind the nginx web server using a reverse proxy.
 
 The production service is hosted on a DigitalOcean droplet and backups are achieved by enabling droplet backups.
 
@@ -49,7 +49,7 @@ The database is exposed to the local machine as 'postgresql://hello_flask:hello_
 Tests can be run as follows:
 
 ```bash
-scripts/tests-service.sh
+scripts/test-service.sh
 ```
 
 This will install the tests' Python dependencies. Note that the tests expect the service to be running on localhost.
