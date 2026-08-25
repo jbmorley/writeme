@@ -30,6 +30,7 @@ ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd 
 PYTHON_VERSION="3.12"
 
 # Ensure the all scripts share the same Python version.
+grep -q "^python = \"$PYTHON_VERSION\." "$ROOT_DIRECTORY/mise.toml"
 grep -q "^FROM python:$PYTHON_VERSION-" "$ROOT_DIRECTORY/service/web/Dockerfile"
 grep -q "^python_version = \"$PYTHON_VERSION\"$" "$ROOT_DIRECTORY/service/tests/Pipfile"
 grep -q "^python_version = \"$PYTHON_VERSION\"$" "$ROOT_DIRECTORY/client/Pipfile"
