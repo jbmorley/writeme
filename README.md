@@ -2,6 +2,22 @@
 
 Send doodles to my receipt printer
 
+## Development
+
+### Dependencies
+
+Install dependencies:
+
+```sh
+scripts/install-dependencies.sh
+```
+
+Upgrade pinned Python dependencies:
+
+```sh
+scripts/upgrade-pinned-dependencies.sh
+```
+
 ## Service
 
 ### Local Development
