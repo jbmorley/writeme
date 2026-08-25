@@ -55,6 +55,7 @@ class Client:
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--once", action="store_true", default=False, help="download all available updates and exit")
     options = parser.parse_args()
 
     # Load the settings.
@@ -90,6 +91,11 @@ def main():
         except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError) as e:
             print(e)
             pass
+
+        if options.once:
+            print("Complete.")
+            exit()
+
         time.sleep(10)
 
 
