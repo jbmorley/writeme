@@ -5,7 +5,7 @@ services:
   web:
     image: $IMAGE_SHA
     ports:
-      - 9449:9449
+      - "127.0.0.1:9449:9449"
     environment:
       - DATABASE_URL=postgresql://hello_flask:hello_flask@database:5432/hello_flask_dev
       - QUEUE_AUTHENTICATION_TOKEN

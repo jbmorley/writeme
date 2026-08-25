@@ -14,6 +14,6 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/{{ service_address }}/privkey.pem;
 
     location / {
-        proxy_pass http://localhost:9449;
+        proxy_pass http://127.0.0.1:9449;
     }
 }
