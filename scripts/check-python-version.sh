@@ -27,7 +27,7 @@ set -u
 
 ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
 
-PYTHON_VERSION="3.12"
+PYTHON_VERSION="3.14"
 
 # Ensure the all scripts share the same Python version.
 grep -q "^python = \"$PYTHON_VERSION\." "$ROOT_DIRECTORY/mise.toml"
