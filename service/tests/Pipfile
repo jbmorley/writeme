@@ -13,4 +13,4 @@ requests = ">=2.31.0"
 
 [requires]
 
-python_version = "3.12"
+python_version = "3.14"
