@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2024-2026 Jason Morley
+# Copyright (c) 2026 Jason Morley
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,21 +27,10 @@ set -u
 
 ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
 
-SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
+PYTHON_VERSION="3.12"
 
-source "$SCRIPTS_DIRECTORY/check-python-version.sh"
-
-# Upgrade the service dependencies.
-cd "$ROOT_DIRECTORY/service/web"
-uv pip compile requirements.in \
-    --universal \
-    --python-version "$PYTHON_VERSION" \
-    --generate-hashes \
-    --upgrade \
-    -o requirements.txt
-
-# Upgrade the test and client dependencies.
-for DIRECTORY in "$ROOT_DIRECTORY/service/tests" "$ROOT_DIRECTORY/client" ; do
-    cd "$DIRECTORY"
-    pipenv lock --python "$PYTHON_VERSION"
-done
+# Ensure the all scripts share the same Python version.
+grep -q "^python = \"$PYTHON_VERSION\." "$ROOT_DIRECTORY/mise.toml"
+grep -q "^FROM python:$PYTHON_VERSION-" "$ROOT_DIRECTORY/service/web/Dockerfile"
+grep -q "^python_version = \"$PYTHON_VERSION\"$" "$ROOT_DIRECTORY/service/tests/Pipfile"
+grep -q "^python_version = \"$PYTHON_VERSION\"$" "$ROOT_DIRECTORY/client/Pipfile"
